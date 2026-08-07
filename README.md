@@ -33,3 +33,17 @@ Python script to automate AtlasCloud image generation
    python .\atlascloud_balance.py
    ```
 3. The output will be saved to `results/balance_YYYY.MM.DD.txt`.
+
+## AtlasCloud Image Edit
+
+1. Set up `.env` with your API key, prompt, and image URLs/paths.
+2. Optionally add a save folder:
+   ```powershell
+   ATLASCLOUD_EDIT_SAVE_FOLDER=edited_images
+   ```
+3. Run the edit script:
+   ```powershell
+   python .\edit_image.py
+   ```
+4. The full response is saved to `results/edit_YYYY.MM.DD.json`.
+5. If configured, the edited image is saved into the folder from `ATLASCLOUD_EDIT_SAVE_FOLDER`.
