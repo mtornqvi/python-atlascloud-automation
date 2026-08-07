@@ -1,6 +1,7 @@
 """Edit images sequentially from a folder using AtlasCloud and save output metadata to dated results files."""
 
 import base64
+import importlib.util
 import json
 import math
 import mimetypes
@@ -13,6 +14,26 @@ from pathlib import Path
 from typing import Any, Tuple
 from urllib.parse import urlparse
 import traceback
+
+# Check for required third-party packages before importing them so the script can
+# print a helpful message instead of crashing at import time when run with the
+# system Python (no virtualenv activated).
+missing = []
+for mod, pkg in (("requests", "requests"), ("dotenv", "python-dotenv"), ("PIL", "Pillow")):
+    if importlib.util.find_spec(mod) is None:
+        missing.append((mod, pkg))
+
+if missing:
+    names = ", ".join(pkg for _, pkg in missing)
+    print("Missing required Python packages:", names)
+    print()
+    print("Install into your virtual environment or system Python. Example (PowerShell):")
+    print("  .\\.venv\\Scripts\\Activate.ps1")
+    print("  python -m pip install -r requirements.txt")
+    print()
+    print("Or run without activating the venv:")
+    print("  .\\.venv\\Scripts\\python.exe -m pip install -r requirements.txt")
+    sys.exit(1)
 
 import requests
 from dotenv import load_dotenv
@@ -275,6 +296,7 @@ def main() -> int:
     prompt = get_env_value(PROMPT_ENV, required=True)
     image_folder = get_env_value(IMAGE_FOLDER_ENV, required=True)
     images = get_images_from_folder(image_folder)
+    save_folder = get_save_folder()
     processed = 0
     skipped = 0
     skipped_entries: list[tuple[str, str]] = []
@@ -353,3 +375,7 @@ def main() -> int:
     write_skipped_list(skipped_entries, skipped_file)
     print(f"Done. Processed: {processed}, skipped: {skipped}, total: {len(images)}")
     return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
