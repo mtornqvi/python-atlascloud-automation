@@ -34,16 +34,21 @@ Python script to automate AtlasCloud image generation
    ```
 3. The output will be saved to `results/balance_YYYY.MM.DD.txt`.
 
-## AtlasCloud Image Edit
+## AtlasCloud Sequential Image Edit
 
-1. Set up `.env` with your API key, prompt, and image URLs/paths.
-2. Optionally add a save folder:
+1. Set up `.env` with your API key, prompt, and source image folder:
    ```powershell
-   ATLASCLOUD_EDIT_SAVE_FOLDER=edited_images
+   ATLASCLOUD_EDIT_IMAGE_FOLDER=C:/Users/mikko/OneDrive/Reference/AtlasCloud/Aqua__Barbie/trimmed
+   ```
+2. Optionally add a save folder for edited images:
+   ```powershell
+   ATLASCLOUD_EDIT_SAVE_FOLDER=C:/Users/mikko/OneDrive/Reference/AtlasCloud/Aqua__Barbie/nude
    ```
 3. Run the edit script:
    ```powershell
-   python .\edit_image.py
+   python .\edit_images_sequentially.py
    ```
-4. The full response is saved to `results/edit_YYYY.MM.DD.json`.
-5. If configured, the edited image is saved into the folder from `ATLASCLOUD_EDIT_SAVE_FOLDER`.
+4. Each source image is edited sequentially.
+5. The full response for each image is saved to `results/edit_<original-name>_YYYY.MM.DD.json`.
+6. If configured, edited images are saved into the folder from `ATLASCLOUD_EDIT_SAVE_FOLDER`.
+7. Images already present in `ATLASCLOUD_EDIT_SAVE_FOLDER` are skipped.
