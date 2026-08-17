@@ -331,7 +331,8 @@ def main() -> int:
             print(f"Polling prediction status at {poll_url}")
             result = poll_prediction(poll_url, api_key)
 
-            output_file = RESULTS_DIR / f"edit_{image_path.stem}_{datetime.now(timezone.utc):%Y.%m.%d}.json"
+            debug_dir = Path.cwd() / "debugging"
+            output_file = debug_dir / f"edit_{image_path.stem}_{datetime.now(timezone.utc):%Y.%m.%d}.json"
             write_results(result, output_file)
             print(f"Wrote response to {output_file}")
 

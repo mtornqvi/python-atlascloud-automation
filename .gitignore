@@ -3,6 +3,12 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# Local environment secrets
+.env
+.env.*
+!.env.example
+!.env*.example
+
 # C extensions
 *.so
 
@@ -219,3 +225,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Ignore folder containing instructions and sensitive guidance
+instructions/
